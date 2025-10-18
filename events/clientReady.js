@@ -23,7 +23,7 @@ module.exports = {
 			}
 		}, 600000);
 		const isActoAlive = async function() {
-			const hwsmpChatMsgs = await bot.guilds.cache.get("1223705839597260852").channels.cache.get("1223705840335196182").messages.fetch({ limit: 100 });
+			const hwsmpChatMsgs = await (await bot.channels.fetch("1223705840335196182")).messages.fetch({ limit: 100 });
 			return await hwsmpChatMsgs.filter(m => m.author.id == "428445352354643968").first();
 		};
 		setInterval(async () => {

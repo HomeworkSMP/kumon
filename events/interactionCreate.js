@@ -6,7 +6,7 @@ module.exports = {
 	async execute(interaction) {
 		if (!(interaction.isCommand() || interaction.isButton() || interaction.isContextMenuCommand() || interaction.isSelectMenu() || interaction.isMessageContextMenuCommand())) return;
 		if (!interaction.inGuild()) return;
-		// @ts-ignore
+
 		const command = bot.commands.get(interaction.commandName);
 
 		if (!command) return;
