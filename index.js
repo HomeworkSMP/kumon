@@ -1,6 +1,7 @@
 const { Client, Partials, Events, Collection, IntentsBitField } = require("discord.js");
 const { token } = require("./config.json");
 const fs = require("node:fs");
+const path = require("node:path");
 
 const bot = new Client({
 	intents: new IntentsBitField(32767),

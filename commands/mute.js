@@ -7,7 +7,6 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("mute")
 		.setDescription("Mutes a member in the server.")
-		.setDefaultMemberPermissions(10000000000)
 		.addUserOption(option =>
 			option.setName("target")
 				.setDescription("The member to mute")

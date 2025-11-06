@@ -7,6 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("hwsmpchannel")
 		.setDescription("Manage channels in the HomeworkSMP Category.")
+		.setDefaultMemberPermissions(10000000000)
 		.addSubcommand(subcommand =>
 			subcommand.setName("create")
 				.setDescription("Create a HomeworkSMP topic channel.")
