@@ -22,14 +22,20 @@ module.exports = {
 				break;
 			}
 		}, 600000);
-		const isActoAlive = async function() {
+		const getLastActoMessage = async function() {
 			const hwsmpChatMsgs = await (await bot.channels.fetch("1223705840335196182")).messages.fetch({ limit: 100 });
 			return await hwsmpChatMsgs.filter(m => m.author.id == "428445352354643968").first();
 		};
-		setInterval(async () => {
-			const lastActoMsg = await isActoAlive();
-			console.log(lastActoMsg.createdTimestamp());
-		}, 86400000);
-		console.log((await isActoAlive()).createdTimestamp);
+		const isActoAlive = async () => {
+			const lastActoMsg = await getLastActoMessage();
+			if (lastActoMsg) {
+				console.log(lastActoMsg.createdTimestamp);
+			}
+			else {
+				console.log("No message found for Acto.");
+			}
+		};
+		isActoAlive();
+		setInterval(isActoAlive, 86400000);
 	},
 };
