@@ -1,5 +1,5 @@
 const ms = require("ms");
-const { SlashCommandBuilder, MessageFlags } = require("discord.js");
+const { SlashCommandBuilder, MessageFlags, PermissionsBitField } = require("discord.js");
 
 module.exports = {
 	name: "mute",
@@ -7,7 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("mute")
 		.setDescription("Mutes a member in the server.")
-		.setDefaultMemberPermissions(10000000000)
+		.setDefaultMemberPermissions(PermissionsBitField.Flags.ModerateMembers)
 		.addUserOption(option =>
 			option.setName("target")
 				.setDescription("The member to mute")
@@ -28,18 +28,22 @@ module.exports = {
 
 		const member = interaction.guild.members.cache.get(target.id) || await interaction.guild.members.fetch(target.id);
 		if (!member) return interaction.reply({ content: "Member not found.", flags: MessageFlags.Ephemeral });
+
+		const muteDuration = ms(duration);
+		if (typeof muteDuration !== "number" || isNaN(muteDuration)) {
+			return interaction.reply({ content: "Invalid duration format. Please use formats like 10m, 1h, 1d.", flags: MessageFlags.Ephemeral });
+		}
 		try {
-			await member.timeout(ms(duration), `Muted by ${interaction.user.username} (${interaction.user.id}) for reason: ${reason}`);
+			await member.timeout(muteDuration, `Muted by ${interaction.user.username} (${interaction.user.id}) for reason: ${reason}`);
 		}
 		catch (error) {
-			interaction.reply({ content: `Failed to mute member. Error: ${error.message}`, flags: MessageFlags.Ephemeral });
-			console.error(error);
-			return;
+			interaction.reply({ content: `Failed to mute the member. Error: ${error.message}`, flags: MessageFlags.Ephemeral });
+			return console.error(error);
 		}
-		interaction.reply({ content: `<@${target.id}> has been successfully muted for **${ms(ms(duration))}**!`, flags: MessageFlags.Ephemeral });
-		interaction.channel.send(`<@${target.id}> has been muted for **${ms(ms(duration))}**. Reason: **${reason}**`);
+		interaction.reply({ content: `<@${target.id}> has been successfully muted for **${ms(duration, { long: true })}**!`, flags: MessageFlags.Ephemeral });
+		interaction.channel.send(`<@${target.id}> has been muted for **${ms(duration, { long: true })}**. Reason: **${reason}**`);
 		try {
-			await target.send(`You have been **muted** in HomeworkSMP for **${ms(ms(duration))}**. Reason: ${reason}`);
+			await target.send(`You have been **muted** in HomeworkSMP for **${ms(duration, { long: true })}**. Reason: ${reason}`);
 		}
 		catch {}
 	},
