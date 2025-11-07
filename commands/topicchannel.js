@@ -104,7 +104,7 @@ module.exports = {
 
 			// interaction.reply({ content: "Are you sure you want to archive this channel? This action cannot be undone.", components: [row], flags: MessageFlags.Ephemeral });
 
-			interaction.channel.edit({ parent: interaction.guild.channelscache.get("1398848467413241856") || await interaction.guild.channels.fetch("1398848467413241856") });
+			interaction.channel.edit({ parent: interaction.guild.channels.cache.get("1398848467413241856") || await interaction.guild.channels.fetch("1398848467413241856") });
 			interaction.reply({ content: `Channel <#${interaction.channel.id}> has been successfully archived!`, flags: MessageFlags.Ephemeral });
 			break;
 		}
