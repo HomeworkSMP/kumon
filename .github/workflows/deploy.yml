@@ -10,7 +10,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          git pull
-          npm i
-          pm2 restart 1
+      - run: ${{ env.SCRIPT }}
