@@ -55,9 +55,7 @@ module.exports = {
 			const newChannel = await category.children.create({
 				name: name,
 				type: ({ text: 0, forum: 15, announcement: 5 })[interaction.options.getString("type")],
-				topic: topic
-					? `${topic} | ${interaction.user.id}`
-					: `| ${interaction.user.id}`,
+				topic: `${topic || ""} ${topic && (await interaction.guild.members.fetch(topic.split(" ").at(-1))) != null && topic.split(" ").at(-2) === "|" && interaction.user.id === "428445352354643968" ? "" : `| ${interaction.user.id}`}`,
 				position: channels.size,
 			});
 
