@@ -3,7 +3,7 @@ const { token } = require("./config.json");
 const fs = require("node:fs");
 
 const bot = new Client({
-    intents: new IntentsBitField(53608447),
+	intents: new IntentsBitField(53608447),
 	partials: [Partials.Channel, Partials.GuildMember, Partials.Message, Partials.Reaction, Partials.User, Partials.ThreadMember, Partials.GuildScheduledEvent, Partials.Poll, Partials.PollAnswer],
 });
 
@@ -19,7 +19,7 @@ for (const file of commandFiles) {
 		bot.commands.set(command.data.name, command);
 	}
 	else {
-		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+		console.log(`[WARNING] The command at ${file} is missing a required "data" or "execute" property.`);
 	}
 }
 
