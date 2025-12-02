@@ -63,8 +63,8 @@ module.exports = {
 		await interaction.reply({ embeds: [embed], ephemeral: true });
 		const presetColors = ["1397476232307675176", "1397476282425544815", "1397476328089059420", "1397476362981216366", "1397476402546348174", "1397476442757140560", "1397476474390450266", "1397476525472743535", "1397476526391296080", "1397477024192401489"];
 		for (const presetColor of presetColors) {
-			if (interaction.member.roles.cache.has(role.id)) {
-				await interaction.member.roles.remove(role.id);
+			if (interaction.member.roles.cache.has(presetColor)) {
+				await interaction.member.roles.remove(presetColor);
 			}
 		}
 	},
